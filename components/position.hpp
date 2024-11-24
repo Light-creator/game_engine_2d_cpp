@@ -4,13 +4,13 @@
 
 class position_component_t: public component_t {
 public:
-  int x, y;
+  int x_, y_;
 
   void init() override {
-    x = 0; y = 0;
+    x_ = 0; y_ = 0;
   }
 
   void update() override {
-    x++; y++;
+    x_++; y_++;
   }
 };

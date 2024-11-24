@@ -32,6 +32,7 @@ int game_t::init(const char* title, int x, int y, int w, int h, bool fullscreen)
   }
   
   player_.add_component<position_component_t>();
+  player_.add_component<sprite_component_t>("/home/light/Projects/cpp/gamedev/game_engine_2d/assets/sprites/characters/player.png");
   
   is_running_ = true;
   return 0;

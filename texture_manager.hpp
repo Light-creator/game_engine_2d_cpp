@@ -3,6 +3,7 @@
 #include "game.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_render.h>
 
 class texture_manager_t {
 public:
@@ -12,5 +13,9 @@ public:
     SDL_FreeSurface(surface);
     
     return texture;
+  }
+
+  static void draw(SDL_Texture* texture, SDL_Rect& src, SDL_Rect& dst) {
+    SDL_RenderCopy(game_t::renderer_, texture, &src, &dst);
   }
 };
