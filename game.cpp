@@ -8,6 +8,7 @@
 #include <iostream>
 
 SDL_Renderer* game_t::renderer_ = nullptr;
+SDL_Event game_t::event_;
 
 ecs_manager_t manager;
 auto& player_(manager.add_entity());
@@ -31,8 +32,9 @@ int game_t::init(const char* title, int x, int y, int w, int h, bool fullscreen)
     return 1;
   }
   
-  player_.add_component<position_component_t>();
+  player_.add_component<transform_component_t>();
   player_.add_component<sprite_component_t>("/home/light/Projects/cpp/gamedev/game_engine_2d/assets/sprites/characters/player.png");
+  player_.add_component<input_component_t>();
   
   is_running_ = true;
   return 0;
@@ -43,9 +45,8 @@ bool game_t::is_running() {
 }
 
 void game_t::process_events() {
-  SDL_Event e;
-  SDL_PollEvent(&e);
-  switch(e.type) {
+  SDL_PollEvent(&game_t::event_);
+  switch(game_t::event_.type) {
     case SDL_QUIT:
       is_running_ = false;
       break;

@@ -12,7 +12,7 @@ private:
   SDL_Texture* texture_;  
   SDL_Rect src_r_, dst_r_;
   
-  position_component_t* pos_;
+  transform_component_t* transform_;
 
 public:
   sprite_component_t(const char* file_path) {
@@ -27,14 +27,14 @@ public:
   }
 
   void init() override {
-    pos_ = &entity_->get_component<position_component_t>();
+    transform_ = &entity_->get_component<transform_component_t>();
     src_r_.w = src_r_.h = 64;
     dst_r_.w = dst_r_.h = 128;
   }
 
   void update() override {
-    dst_r_.x = pos_->x_;
-    dst_r_.y = pos_->y_;
+    dst_r_.x = transform_->x();
+    dst_r_.y = transform_->y();
   }
 
   void draw() override {

@@ -4,7 +4,8 @@ FLAGS = -lSDL2 -lSDL2_image -g
 
 SRCS = \
 			main.cpp \
-			game.cpp 
+			game.cpp \
+			vector2.cpp
 	
 OUT = ./main
 

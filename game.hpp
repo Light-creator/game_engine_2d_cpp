@@ -20,4 +20,5 @@ public:
   void quit();
   
   static SDL_Renderer* renderer_;
+  static SDL_Event event_;
 };
