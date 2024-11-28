@@ -68,7 +68,7 @@ public:
 
   template<typename T>
   bool has_component() const {
-    return hash_[get_component_id<T>()];
+    return hash_.find(get_component_id<T>()) != hash_.end();
   }
 
   bool is_active() {

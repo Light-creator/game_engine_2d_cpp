@@ -1,4 +1,5 @@
 #include "game.hpp"
+#include "components/collider.hpp"
 #include "ecs_manager.hpp"
 
 #include "components/components.hpp"
@@ -12,6 +13,7 @@ SDL_Event game_t::event_;
 
 ecs_manager_t manager;
 auto& player_(manager.add_entity());
+auto& block_(manager.add_entity());
 
 int game_t::init(const char* title, int x, int y, int w, int h, bool fullscreen) {
   if(SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -35,7 +37,12 @@ int game_t::init(const char* title, int x, int y, int w, int h, bool fullscreen)
   player_.add_component<transform_component_t>();
   player_.add_component<sprite_component_t>("/home/light/Projects/cpp/gamedev/game_engine_2d/assets/sprites/characters/player.png");
   player_.add_component<input_component_t>();
+  player_.add_component<collider_component_t>("player");
   
+  block_.add_component<transform_component_t>(64, 64, 1, 256, 256);
+  block_.add_component<sprite_component_t>("/home/light/Projects/cpp/gamedev/game_engine_2d/assets/sprites/characters/player.png");
+  block_.add_component<collider_component_t>("block");
+
   is_running_ = true;
   return 0;
 }
@@ -56,6 +63,11 @@ void game_t::process_events() {
 
 void game_t::update() {
   manager.update();
+
+  if(player_.get_component<collider_component_t>().has_collision(
+    block_.get_component<collider_component_t>().collider_
+  ))
+    std::cout << "Triggered collision\n";
 
   manager.refresh();
 }

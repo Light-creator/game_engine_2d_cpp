@@ -4,12 +4,22 @@
 #include "../vector2.hpp"
 
 class transform_component_t: public component_t {
-private:
+public:
+  int w_ = 64, h_ = 64;
+  int scale_ = 2;
   vec2_t pos_{0, 0};
   vec2_t velocity_;
   int speed_ = 5;
 
 public:
+  transform_component_t() = default;
+
+  transform_component_t(int w, int h, int scale, int x, int y):
+    w_(w), h_(h), scale_(scale) {
+    pos_.x_ = x;
+    pos_.y_ = y;
+  }
+
   void init() override {
     velocity_.x_ = 0;
     velocity_.y_ = 0;
