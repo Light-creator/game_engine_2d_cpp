@@ -1,6 +1,7 @@
 #include "game.hpp"
 #include "components/collider.hpp"
 #include "ecs_manager.hpp"
+#include "vector2.hpp"
 
 #include "components/components.hpp"
 
@@ -66,9 +67,9 @@ void game_t::update() {
 
   if(player_.get_component<collider_component_t>().has_collision(
     block_.get_component<collider_component_t>().collider_
-  ))
-    std::cout << "Triggered collision\n";
-
+  )) {
+    player_.get_component<transform_component_t>().velocity_ *= -1;
+  }
   manager.refresh();
 }
 

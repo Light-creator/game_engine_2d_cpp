@@ -48,6 +48,18 @@ vec2_t vec2_t::operator/(vec2_t& v) {
   return res;
 }
 
+vec2_t& vec2_t::operator*=(int v) {
+  x_ *= v;
+  y_ *= v;
+  return *this;  
+}
+
+vec2_t vec2_t::operator*(int v) {
+  vec2_t res = *this;
+  res *= v;
+  return res;
+}
+
 std::ostream& vec2_t::operator<<(std::ostream& os) {
   os << "(" << x_ << " " << y_ << ")";
   return os;
