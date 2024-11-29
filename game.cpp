@@ -36,7 +36,13 @@ int game_t::init(const char* title, int x, int y, int w, int h, bool fullscreen)
   }
   
   player_.add_component<transform_component_t>();
-  player_.add_component<sprite_component_t>("/home/light/Projects/cpp/gamedev/game_engine_2d/assets/sprites/characters/player.png");
+  player_.add_component<sprite_component_t>(
+    "/home/light/Projects/cpp/gamedev/game_engine_2d/assets/sprites/characters/player.png",
+    0,
+    0,
+    6,
+    50
+  );
   player_.add_component<input_component_t>();
   player_.add_component<collider_component_t>("player");
   

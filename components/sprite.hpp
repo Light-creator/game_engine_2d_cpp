@@ -13,6 +13,11 @@ private:
   SDL_Rect src_r_, dst_r_;
   
   transform_component_t* transform_;
+  
+  bool is_animated_ = false;
+  int frames_ = 0;
+  int speed_ = 100;
+  int counter_ = 0;
 
 public:
   sprite_component_t(const char* file_path) {
@@ -21,6 +26,13 @@ public:
   }
 
   sprite_component_t(const char* file_path, int x, int y) {
+    texture_ = texture_manager_t::load_texture(file_path);
+    src_r_.x = x;
+    src_r_.y = y;
+  }
+ 
+  sprite_component_t(const char* file_path, int x, int y, int frames, int speed): 
+    is_animated_(true), frames_(frames), speed_(speed) {
     texture_ = texture_manager_t::load_texture(file_path);
     src_r_.x = x;
     src_r_.y = y;
@@ -35,8 +47,13 @@ public:
   }
 
   void update() override {
-    dst_r_.x = transform_->x();
-    dst_r_.y = transform_->y();
+    if(is_animated_) {
+      src_r_.x = src_r_.w * static_cast<int>((SDL_GetTicks() / speed_) % frames_);
+      // std::cout << src_r_.x << "\n";
+    }
+
+    dst_r_.x = transform_->pos_.x_;
+    dst_r_.y = transform_->pos_.y_;
   }
 
   void draw() override {

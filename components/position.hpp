@@ -5,7 +5,7 @@
 
 class transform_component_t: public component_t {
 public:
-  int w_ = 64, h_ = 64;
+  int w_ = 48, h_ = 60;
   int scale_ = 2;
   vec2_t pos_{0, 0};
   vec2_t velocity_;
