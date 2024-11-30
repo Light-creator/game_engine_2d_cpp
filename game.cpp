@@ -36,13 +36,15 @@ int game_t::init(const char* title, int x, int y, int w, int h, bool fullscreen)
   }
   
   player_.add_component<transform_component_t>();
+  
   player_.add_component<sprite_component_t>(
-    "/home/light/Projects/cpp/gamedev/game_engine_2d/assets/sprites/characters/player.png",
-    0,
-    0,
-    6,
-    50
-  );
+    "/home/light/Projects/cpp/gamedev/game_engine_2d/assets/sprites/characters/player.png", 0, 0);
+  player_.get_component<sprite_component_t>().add_animation("idle", 6, 0, 50);
+  player_.get_component<sprite_component_t>().add_animation("run_up", 6, 2, 100);
+  player_.get_component<sprite_component_t>().add_animation("run_down", 6, 3, 100);
+  player_.get_component<sprite_component_t>().add_animation("run_left", 6, 1, 100);
+  player_.get_component<sprite_component_t>().change_animation("idle");
+
   player_.add_component<input_component_t>();
   player_.add_component<collider_component_t>("player");
   
