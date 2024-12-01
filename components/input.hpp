@@ -2,6 +2,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_keycode.h>
+#include <SDL2/SDL_render.h>
 
 #include "../ECS.hpp"
 #include "position.hpp"
@@ -36,6 +37,8 @@ public:
           break;
         case SDLK_a: 
           transform_->set_vel_x(-1); 
+          sprite_->flip_ = SDL_FLIP_HORIZONTAL;
+          sprite_->change_animation("run_left");
           break;
         default: break;
       }
@@ -57,6 +60,7 @@ public:
           break;
         case SDLK_a: 
           transform_->set_vel_x(0); 
+          sprite_->flip_ = SDL_FLIP_NONE;
           sprite_->change_animation("idle");
           break;
         default: break;

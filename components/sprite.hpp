@@ -11,7 +11,7 @@
 #include "position.hpp"
 
 class sprite_component_t: public component_t {
-private:
+public:
   SDL_Texture* texture_;  
   SDL_Rect src_r_, dst_r_;
   
@@ -21,6 +21,7 @@ private:
   int frames_ = 0;
   int speed_ = 100;
   int counter_ = 0;
+  SDL_RendererFlip flip_;
   
   std::shared_ptr<animation_t> curr_animation_ = nullptr;
   std::unordered_map<std::string, std::shared_ptr<animation_t>> animations_;
@@ -63,7 +64,7 @@ public:
   }
 
   void draw() override {
-    texture_manager_t::draw(texture_, src_r_, dst_r_);
+    texture_manager_t::draw(texture_, src_r_, dst_r_, flip_);
   }
 
 

@@ -15,7 +15,7 @@ public:
     return texture;
   }
 
-  static void draw(SDL_Texture* texture, SDL_Rect& src, SDL_Rect& dst) {
-    SDL_RenderCopy(game_t::renderer_, texture, &src, &dst);
+  static void draw(SDL_Texture* texture, SDL_Rect& src, SDL_Rect& dst, SDL_RendererFlip& flip) {
+    SDL_RenderCopyEx(game_t::renderer_, texture, &src, &dst, 0, NULL, flip);
   }
 };
