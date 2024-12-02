@@ -13,6 +13,9 @@ SDL_Renderer* game_t::renderer_ = nullptr;
 SDL_Event game_t::event_;
 
 ecs_manager_t manager;
+
+auto& tile(manager.add_entity());
+
 auto& player_(manager.add_entity());
 auto& block_(manager.add_entity());
 
@@ -34,6 +37,8 @@ int game_t::init(const char* title, int x, int y, int w, int h, bool fullscreen)
     std::cerr << "Renderer init error\n";
     return 1;
   }
+
+  tile.add_component<tile_component_t>(1, 0, 0, 16, 16);
   
   player_.add_component<transform_component_t>();
   

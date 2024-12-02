@@ -13,6 +13,8 @@ public:
   std::string tag;
 
 public:
+  collider_component_t() = default;
+
   collider_component_t(const char* s): tag(s) {}
 
   void init() override {
