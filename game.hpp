@@ -1,5 +1,6 @@
 #pragma once
 
+#include "components/collider.hpp"
 #include <SDL2/SDL.h>
 
 class game_t {
@@ -19,6 +20,10 @@ public:
 
   void quit();
   
+  static void add_tile(const char* file_path, int src_x, int src_y, int pos_x, int pos_y, int w, int h, int scale);
+  
   static SDL_Renderer* renderer_;
   static SDL_Event event_;
+
+  static std::vector<collider_component_t> colliders_;
 };
