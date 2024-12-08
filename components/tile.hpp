@@ -15,7 +15,7 @@ public:
 
   vec2_t pos_;
   
-  SDL_RendererFlip flip_;
+  SDL_RendererFlip flip_ = SDL_FLIP_NONE;
 
 public:
   tile_component_t() = default;

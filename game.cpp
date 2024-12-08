@@ -60,8 +60,8 @@ int game_t::init(const char* title, int x, int y, int w, int h, bool fullscreen)
   
   player_init();
    
-  // map = new map_t(10, 10);
-  // map->load("./assets/maps/test.txt", "",  16, 16, 2);
+  map = new map_t(12, 12);
+  map->load("./assets/maps/test.txt", "./assets/tileset/FieldsTileset.png",  32, 32, 4);
   
   is_running_ = true;
   return 0;
@@ -108,9 +108,9 @@ void game_t::process_events() {
 void game_t::update() {
   manager.update();
   
-  camera_.x = player_.get_component<transform_component_t>().pos_.x_ - screen_w_;
-  camera_.y = player_.get_component<transform_component_t>().pos_.y_ - screen_h_;
-
+  camera_.x = player_.get_component<transform_component_t>().pos_.x_ - screen_w_/2;
+  camera_.y = player_.get_component<transform_component_t>().pos_.y_ - screen_h_/2;
+  
   if(camera_.x < 0) camera_.x = 0;
   if(camera_.y < 0) camera_.y = 0;
   if(camera_.x > screen_w_) camera_.x = screen_w_; 
@@ -125,13 +125,15 @@ void game_t::update() {
   manager.refresh();
 }
 
-// auto& tiles(manager.get_group(tiles_group_));
+auto& tiles(manager.get_group(tiles_group_));
 auto& players(manager.get_group(players_group_));
 
 void game_t::render() {
   SDL_SetRenderDrawColor(renderer_, 242,240,239, 255);
   SDL_RenderClear(renderer_);
   
+  for(auto& t: tiles) t->draw();
+
   for(auto& p: players) p->draw();
 
   SDL_RenderPresent(renderer_);

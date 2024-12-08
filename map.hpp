@@ -37,11 +37,13 @@ public:
       while((pos_end = line.find(delim, pos_start)) != std::string::npos) {
         tk = line.substr(pos_start, pos_end - pos_start);
         
-        int num = stoi(tk);
-        int src_y = num/10;
-        int src_x = num%10;
+        int src_y = tk[0]-'0';
+        int src_x = tk[1]-'0';
+
+        src_x *= w;
+        src_y *= h;
         
-        game_t::add_tile(tileset, src_x, src_y, col*w*scale, row*h*scale, w, h, 2);
+        game_t::add_tile(tileset, src_x, src_y, col*w*scale, row*h*scale, w, h, scale);
 
         pos_start = pos_end+1;
         col++;
