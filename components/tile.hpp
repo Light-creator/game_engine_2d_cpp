@@ -2,6 +2,7 @@
 
 #include "../ECS.hpp"
 #include "../texture_manager.hpp"
+#include "../vector2.hpp"
 
 class tile_component_t: public component_t {
 public:
@@ -11,6 +12,8 @@ public:
 
   SDL_Texture* texture_;
   SDL_Rect src_r_, dst_r_;
+
+  vec2_t pos_;
   
   SDL_RendererFlip flip_;
 
@@ -24,6 +27,9 @@ public:
   }
 
   void init() override {
+    pos_.x_ = pos_x_;
+    pos_.y_ = pos_y_;
+
     src_r_.x = src_x_;
     src_r_.y = src_y_;
     src_r_.w = w_;
@@ -33,6 +39,11 @@ public:
     dst_r_.y = pos_y_;
     dst_r_.w = w_*scale_;
     dst_r_.h = h_*scale_;
+  }
+
+  void update() override {
+    dst_r_.x = pos_.x_ - game_t::camera_.x;
+    dst_r_.y = pos_.y_ - game_t::camera_.y;
   }
 
   void draw() override {

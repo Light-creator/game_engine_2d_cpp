@@ -59,8 +59,8 @@ public:
       src_r_.x = src_r_.w * static_cast<int>((SDL_GetTicks() / curr_animation_->speed_) % curr_animation_->frames_);
     }
 
-    dst_r_.x = transform_->pos_.x_;
-    dst_r_.y = transform_->pos_.y_;
+    dst_r_.x = transform_->pos_.x_ - game_t::camera_.x;
+    dst_r_.y = transform_->pos_.y_ - game_t::camera_.y;
   }
 
   void draw() override {

@@ -14,13 +14,14 @@
 
 SDL_Renderer* game_t::renderer_ = nullptr;
 SDL_Event game_t::event_;
+SDL_Rect game_t::camera_ = {0, 0, 0, 0};
+int game_t::screen_h_ = 0;
+int game_t::screen_w_ = 0;
 
 ecs_manager_t manager;
 
 auto& tile(manager.add_entity());
-
 auto& player_(manager.add_entity());
-// auto& block_(manager.add_entity());
 
 map_t* map;
 
@@ -44,6 +45,11 @@ int game_t::init(const char* title, int x, int y, int w, int h, bool fullscreen)
     return 1;
   }
 
+  screen_h_ = h;
+  screen_w_ = w;
+  camera_.w = w;
+  camera_.h = h;
+
   renderer_ = SDL_CreateRenderer(window_, -1, 0);
   if(!renderer_) {
     std::cerr << "Renderer init error\n";
@@ -62,7 +68,7 @@ int game_t::init(const char* title, int x, int y, int w, int h, bool fullscreen)
 }
 
 void player_init() {
-  player_.add_component<transform_component_t>();
+  player_.add_component<transform_component_t>(48, 60, 2, game_t::screen_w_/2, game_t::screen_h_/2);
   
   player_.add_component<sprite_component_t>("/home/light/Projects/cpp/gamedev/game_engine_2d/assets/sprites/characters/player.png", 0, 0);
   player_.get_component<sprite_component_t>().add_animation("idle", 6, 0, 50);
@@ -101,6 +107,14 @@ void game_t::process_events() {
 
 void game_t::update() {
   manager.update();
+  
+  camera_.x = player_.get_component<transform_component_t>().pos_.x_ - screen_w_;
+  camera_.y = player_.get_component<transform_component_t>().pos_.y_ - screen_h_;
+
+  if(camera_.x < 0) camera_.x = 0;
+  if(camera_.y < 0) camera_.y = 0;
+  if(camera_.x > screen_w_) camera_.x = screen_w_; 
+  if(camera_.y > screen_h_) camera_.y = screen_h_;
 
   // if(player_.get_component<collider_component_t>().has_collision(
   //   block_.get_component<collider_component_t>().collider_

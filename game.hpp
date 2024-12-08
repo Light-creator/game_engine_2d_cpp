@@ -26,4 +26,9 @@ public:
   static SDL_Event event_;
 
   static std::vector<collider_component_t> colliders_;
+
+  static int screen_w_;
+  static int screen_h_;
+
+  static SDL_Rect camera_;
 };
