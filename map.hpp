@@ -2,6 +2,7 @@
 
 #include "ECS.hpp"
 #include "components/components.hpp"
+#include "game.hpp"
 
 #include <cstddef>
 #include <cstring>
@@ -39,18 +40,42 @@ public:
         
         int src_y = tk[0]-'0';
         int src_x = tk[1]-'0';
+        int collider = tk[2]-'0';
 
         src_x *= w;
         src_y *= h;
-        
-        game_t::add_tile(tileset, src_x, src_y, col*w*scale, row*h*scale, w, h, scale);
+          
+        std::cout << " (" << row*h*scale << " " << col*w*scale << " " << collider << ") ";
 
+
+        add_tile(tileset, src_x, src_y, col*w*scale, row*h*scale, w, h, scale, collider);
+        
         pos_start = pos_end+1;
         col++;
       }
+      std::cout << "\n";
       row++;
     }
 
     file.close();
+  }
+
+  void add_tile(const char* file_path, int src_x, int src_y, int pos_x, int pos_y, int w, int h, int scale, int collider) {
+    auto& tile(game_t::manager_.add_entity());
+    tile.add_component<tile_component_t>(
+      file_path, src_x, src_y, pos_x, pos_y, w, h, scale
+    );
+
+    if(collider) {
+      auto& tile_collider(game_t::manager_.add_entity());
+      tile_collider.add_component<collider_component_t>(pos_x, pos_y, w, h, scale); 
+      tile_collider.add_group(game_t::colliders_group_);
+    }
+
+    tile.add_group(game_t::tiles_group_);
+  }
+
+  void add_collider() {
+
   }
 };

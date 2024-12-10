@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ECS.hpp"
 #include "components/collider.hpp"
 #include <SDL2/SDL.h>
 
@@ -20,7 +21,7 @@ public:
 
   void quit();
   
-  static void add_tile(const char* file_path, int src_x, int src_y, int pos_x, int pos_y, int w, int h, int scale);
+  static void add_tile(const char* file_path, int src_x, int src_y, int pos_x, int pos_y, int w, int h, int scale, int collider);
   
   static SDL_Renderer* renderer_;
   static SDL_Event event_;
@@ -31,4 +32,12 @@ public:
   static int screen_h_;
 
   static SDL_Rect camera_;
+
+  static ecs_manager_t manager_;
+
+  enum groups {
+    tiles_group_,
+    players_group_,
+    colliders_group_
+  };
 };
